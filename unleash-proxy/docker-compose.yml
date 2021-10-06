@@ -1,0 +1,18 @@
+version: "3.4"
+services:
+  proxy:
+    build: .
+    environment:
+      UNLEASH_API_TOKEN: 87495043fc36b2198805bfe45f667eb310b0e196c761d9e3d785bbad77141e6e
+      UNLEASH_URL: http://web:4242/api/
+    networks:
+      - unleash-server_default
+    ports:
+      - "3001:3001"
+    command: npm run start
+
+networks:
+  # This network is automatically created when docker-compose is ran in the server-unleash folder
+  # The name is the project folder name + _default (unleash-server_default)
+  unleash-server_default:
+    external: true
