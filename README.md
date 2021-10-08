@@ -56,9 +56,9 @@ Now you can run `docker-compose up` one more time, and everything should be work
 
 Now you'll be able to reach:
 
-Unleash Server/UI: http://localhost:4242
-Unleash Proxy: http://localhost:3001/proxy
-Webapp: http://localhost:3000
+- Unleash Server/UI: http://localhost:4242
+- Unleash Proxy: http://localhost:3001/proxy
+- Webapp: http://localhost:3000
 
 ### Unleash server
 
