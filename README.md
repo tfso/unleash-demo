@@ -5,7 +5,7 @@ Unleash is a OSS system for managing feature toggles.
 This demo is created to learn how it works, and how we might want to use it in 24SO if we want do start using feature flags more.
 *We currently have [our own feature flag api](https://github.com/tfso/api-featureflag).*
 
-**[GET ME TO THE DEMO](#demo-(requires-docker-compose))**
+**[GET ME TO THE DEMO](#demo-requires-docker-compose)**
 
 ## Motivation
 
