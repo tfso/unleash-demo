@@ -1,7 +1,7 @@
 version: "3.4"
 
 services:
-  db:
+  unleash-db:
     expose:
       - "5432"
     image: oysteinvesth/unleash_db_intro
@@ -15,41 +15,46 @@ services:
       timeout: 1m
       retries: 5
       start_period: 10s
-  web:
+  unleash-server:
     build: .
     ports:
       - "4242:4242"
     environment:
-      DATABASE_URL: "postgres://postgres:unleash@db/postgres"
+      DATABASE_URL: "postgres://postgres:unleash@unleash-db/postgres"
       DATABASE_SSL: "false"
     build:
       context: unleash-server/
     depends_on:
-      - db
+      - unleash-db
     command: npm run start
     healthcheck:
+      # test: ["CMD-SHELL", "pg_isready -U unleash"]
+      # interval: 10s
+      # timeout: 5s
+      # retries: 5
+      # start_period: 15s
       test: ["CMD", "nc",  "-z", "db", "5432"]
       interval: 1s
       timeout: 1m
-      retries: 5
-      start_period: 15s
-  proxy:
+      retries: 20
+      start_period: 20s
+  unleash-proxy:
     build:
       context: unleash-proxy/
     environment:
       UNLEASH_API_TOKEN: 706cb780c2cbc9622e4ff36e49a48261ab91920f1322ce2008cad0188eab9d02
       UNLEASH_URL: http://unleash:4242/api/
     depends_on:
-      - web
+      - unleash-server
+    links:
+      - "unleash-server:unleash"
     ports:
       - "3001:3001"
     command: npm run start
-    links:
-      - "web:unleash"
   webapp:
     build:
       context: webapp/
     depends_on:
-      - proxy
+      - unleash-proxy
     ports: 
       - "3000:80"
